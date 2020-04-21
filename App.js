@@ -152,11 +152,12 @@ AppRegistry.registerComponent('RnDirectionsApp', () => RnDirectionsApp);
 
 
 /* ONEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE */
-/* (Berlin) Map displays but it doesn't draw the path  */
+/* Now draws correct polyline route between Berlin and Frankfurt */
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { StyleSheet, View, Text } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { decode } from "@mapbox/polyline";
+import { SearchBar } from 'react-native-elements';
 
 const getDirections = async (startLoc, destinationLoc) => {
   try {
@@ -178,30 +179,90 @@ const getDirections = async (startLoc, destinationLoc) => {
   }
 };
 
+var styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  map: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+  }
+});
+
+
 const App = () => {
   const [coords, setCoords] = useState([]);
 
-  useEffect(() => {
-    getDirections("52.5200066,13.404954", "50.1109221,8.6821267")
+  /*useEffect(() => {
+    getDirections("30.286488,-97.736568", "30.286176 ,-97.742169")
       .then(coords => setCoords(coords))
       .catch(err => console.log("Something went wrong"));
-  }, []);
+  }, []); */
 
+
+  const [search, setSearch] = useState("");
   return (
     <>
+      <SearchBar
+        placeholder="Type Here..."
+        onChangeText={(text) => setSearch(text)}
+        value={search}
+      />
+
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: 52.5200066,
-          longitude: 13.404954,
-          latitudeDelta: 0.1,
-          longitudeDelta: 0.1
+          latitude: 30.286488,
+          longitude: -97.736568,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01
         }}
       >
         {coords.length > 0 && <Polyline coordinates={coords} />}
-        <Marker coordinate={{ latitude: 52.5200066, longitude: 13.404954 }} />
-        <Marker coordinate={{ latitude: 50.1109221, longitude: 8.6821267 }} />
+        <MapView.Marker
+          coordinate={{ latitude: 30.286488, longitude: -97.736568 }}
+          title={"GDC"}
+          description={"Convergent team meeting place!"}
+        ></MapView.Marker>
+
+        <MapView.Marker
+          coordinate={{ latitude: 30.286176, longitude: -97.742169 }}
+          title={"Chipotle"}
+          description={"Cool place to eat Tex Mex food!"}
+          pinColor={"blue"}
+          onPress={() => getDirections("30.286488,-97.736568", "30.286176 ,-97.742169").then((coords) => setCoords(coords))}
+        ></MapView.Marker>
+
+        <MapView.Marker
+          coordinate={{ latitude: 30.281785, longitude: -97.743173 }}
+          title={"Chick-fil-A"}
+          description={"Best fast food place ever!"}
+          pinColor={"blue"}
+          onPress={() => getDirections("30.286488,-97.736568", "30.281785 ,-97.743173").then((coords) => setCoords(coords))}
+        ></MapView.Marker>
+
+        <MapView.Marker
+          coordinate={{ latitude: 30.293756, longitude: -97.741728 }}
+          title={"Torchy's Tacos"}
+          description={"Best tacos in Austin"}
+          pinColor={"blue"}
+          onPress={() => getDirections("30.286488,-97.736568", "30.293756 ,-97.741728").then((coords) => setCoords(coords))}
+        ></MapView.Marker>
+
       </MapView>
+
+
+      <View style={{ alignSelf: 'center', fontSize: 10, justifyContent: 'center', alignItems: 'center' }}>
+        <Text> Foodability Maps View </Text>
+      </View>
+
     </>
   );
 };
