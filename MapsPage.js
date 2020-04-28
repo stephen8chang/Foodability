@@ -26,12 +26,23 @@ const getDirections = async (startLoc, destinationLoc) => {
 
 var styles = StyleSheet.create({
 
-    container: {
-        flex: 1,
-        justifyContent: 'center',
+    header: {
+        width: 200,
+        flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        textAlign: 'center',
+        fontSize: 20,
+        fontWeight: 'bold',
     },
+
+    body: {
+        width: 200,
+        flexDirection: 'row',
+        alignItems: 'center',
+        textAlign: 'center',
+        fontSize: 15,
+    },
+
     map: {
         position: 'absolute',
         top: 0,
@@ -63,7 +74,7 @@ export default function MapsPage({ navigation }) {
 
 
             <MapView
-                style={styles.container}
+                style={styles.map}
                 initialRegion={{
                     latitude: 30.286488,
                     longitude: -97.736568,
@@ -79,6 +90,12 @@ export default function MapsPage({ navigation }) {
                 >
                     <MapView.Callout>
                         <View>
+                            <Text style={styles.header}>
+                                Gates Dell Complex
+                            </Text>
+                            <Text style={styles.body}>
+                                Meeting place for Convergent meetings.
+                            </Text>
                             <Button
                                 title="Learn More"
                             />
@@ -93,7 +110,21 @@ export default function MapsPage({ navigation }) {
                     description={"Cool place to eat Tex Mex food!"}
                     pinColor={"blue"}
                     onPress={() => { getDirections("30.286488,-97.736568", "30.286176 ,-97.742169").then((coords) => setCoords(coords)); navigation.navigate('ReviewPage') }}
-                ></MapView.Marker>
+                >
+                    <MapView.Callout>
+                        <View>
+                            <Text style={styles.header}>
+                                Chipotle
+                            </Text>
+                            <Text style={styles.body}>
+                                Cool place to eat Tex Mex food!
+                            </Text>
+                            <Button
+                                title="Learn More"
+                            />
+                        </View>
+                    </MapView.Callout>
+                </MapView.Marker>
 
                 <MapView.Marker
                     coordinate={{ latitude: 30.281785, longitude: -97.743173 }}
@@ -101,7 +132,21 @@ export default function MapsPage({ navigation }) {
                     description={"Best fast food place ever!"}
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.281785 ,-97.743173").then((coords) => setCoords(coords))}
-                ></MapView.Marker>
+                >
+                    <MapView.Callout>
+                        <View>
+                            <Text style={styles.header}>
+                                Chick-fil-A
+                            </Text>
+                            <Text style={styles.body}>
+                                Best fast food place ever!
+                            </Text>
+                            <Button
+                                title="Learn More"
+                            />
+                        </View>
+                    </MapView.Callout>
+                </MapView.Marker>
 
                 <MapView.Marker
                     coordinate={{ latitude: 30.293756, longitude: -97.741728 }}
@@ -109,7 +154,21 @@ export default function MapsPage({ navigation }) {
                     description={"Best tacos in Austin!"}
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.293756 ,-97.741728").then((coords) => setCoords(coords))}
-                ></MapView.Marker>
+                >
+                    <MapView.Callout>
+                        <View>
+                            <Text style={styles.header}>
+                                Torchy's Tacos
+                            </Text>
+                            <Text style={styles.body}>
+                                Best tacos in Austin!
+                            </Text>
+                            <Button
+                                title="Learn More"
+                            />
+                        </View>
+                    </MapView.Callout>
+                </MapView.Marker>
 
                 <MapView.Marker
                     coordinate={{ latitude: 30.286289, longitude: -97.744987 }}
@@ -117,7 +176,21 @@ export default function MapsPage({ navigation }) {
                     description={"3am dinners hit different here"}
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.286289 ,-97.744987").then((coords) => setCoords(coords))}
-                ></MapView.Marker>
+                >
+                    <MapView.Callout>
+                        <View>
+                            <Text style={styles.header}>
+                                Plucker's
+                            </Text>
+                            <Text style={styles.body}>
+                                3am dinners hit different here
+                            </Text>
+                            <Button
+                                title="Learn More"
+                            />
+                        </View>
+                    </MapView.Callout>
+                </MapView.Marker>
 
             </MapView>
 
