@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "foodability",
-    "slug": "foodability",
+    "name": "ProjectFoodability",
+    "slug": "ProjectFoodability",
     "platforms": [
       "ios",
       "android",
