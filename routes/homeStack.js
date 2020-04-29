@@ -11,7 +11,7 @@ export default function Navigator() {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName='Home'>
-                <Stack.Screen name='~Foodability~' component={MapsPage} />
+                <Stack.Screen name='FOODABILITY' component={MapsPage} />
                 <Stack.Screen name='ReviewPage' component={ReviewPage} />
             </Stack.Navigator>
         </NavigationContainer>

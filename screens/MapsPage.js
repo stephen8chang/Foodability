@@ -103,7 +103,7 @@ export default function MapsPage({ navigation }) {
                     pinColor={"blue"}
                     onPress={() => { getDirections("30.286488,-97.736568", "30.286176 ,-97.742169").then((coords) => setCoords(coords)) }}
                 >
-                    <MapView.Callout>
+                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
                         <View>
                             <Text style={styles.header}>
                                 Chipotle
@@ -113,7 +113,6 @@ export default function MapsPage({ navigation }) {
                             </Text>
                             <Button
                                 title="Learn More"
-                            //onClick={navigation.navigate('ReviewPage')}
                             />
                         </View>
                     </MapView.Callout>
@@ -126,7 +125,7 @@ export default function MapsPage({ navigation }) {
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.281785 ,-97.743173").then((coords) => setCoords(coords))}
                 >
-                    <MapView.Callout>
+                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
                         <View>
                             <Text style={styles.header}>
                                 Chick-fil-A
@@ -148,7 +147,7 @@ export default function MapsPage({ navigation }) {
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.293756 ,-97.741728").then((coords) => setCoords(coords))}
                 >
-                    <MapView.Callout>
+                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
                         <View>
                             <Text style={styles.header}>
                                 Torchy's Tacos
@@ -170,13 +169,35 @@ export default function MapsPage({ navigation }) {
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.286289 ,-97.744987").then((coords) => setCoords(coords))}
                 >
-                    <MapView.Callout>
+                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
                         <View>
                             <Text style={styles.header}>
                                 Plucker's
                             </Text>
                             <Text style={styles.body}>
                                 3am dinners hit different here
+                            </Text>
+                            <Button
+                                title="Learn More"
+                            />
+                        </View>
+                    </MapView.Callout>
+                </MapView.Marker>
+
+                <MapView.Marker
+                    coordinate={{ latitude: 30.278990, longitude: -97.742402 }}
+                    title={"Clay Pit"}
+                    description={"Awesome indian food!"}
+                    pinColor={"blue"}
+                    onPress={() => getDirections("30.286488,-97.736568", "30.278990 ,-97.742402").then((coords) => setCoords(coords))}
+                >
+                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                        <View>
+                            <Text style={styles.header}>
+                                Clay Pit
+                            </Text>
+                            <Text style={styles.body}>
+                                Awesome Indian food!
                             </Text>
                             <Button
                                 title="Learn More"
