@@ -80,11 +80,7 @@ export default function MapsPage({ navigation }) {
                     title={"GDC"}
                     description={"Convergent team meeting place!"}
                 >
-<<<<<<< HEAD
                     <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
-=======
-                    <MapView.Callout>
->>>>>>> 9ad23b71fb9ead018cf250e30bafc67d64fbc7ce
                         <View>
                             <Text style={styles.header} >
                                 Gates Dell Complex
@@ -94,10 +90,6 @@ export default function MapsPage({ navigation }) {
                             </Text>
                             <Button
                                 title={"Learn More"}
-<<<<<<< HEAD
-=======
-                                onPress={() => { console.log('hello'); navigation.navigate('ReviewPage') }}
->>>>>>> 9ad23b71fb9ead018cf250e30bafc67d64fbc7ce
                             />
                         </View>
                     </MapView.Callout>
