@@ -35,12 +35,20 @@ export default function ReviewPage() {
     
      } */
 
+
     const [review, setReview] = useState('');
     const [switchValue1, setSwitchValue1] = useState(false);
     const [switchValue2, setSwitchValue2] = useState(false);
     const [switchValue3, setSwitchValue3] = useState(false);
     const [switchValue4, setSwitchValue4] = useState(false);
     const [switchValue5, setSwitchValue5] = useState(false);
+
+    const toggleSwitch1 = () => setSwitchValue1(previousState => !previousState);
+    const toggleSwitch2 = () => setSwitchValue2(previousState => !previousState);
+    const toggleSwitch3 = () => setSwitchValue3(previousState => !previousState);
+    const toggleSwitch4 = () => setSwitchValue4(previousState => !previousState);
+    const toggleSwitch5 = () => setSwitchValue5(previousState => !previousState);
+
 
     return (
         <ScrollView>
@@ -67,10 +75,10 @@ export default function ReviewPage() {
                 {/*onValueChange will be triggered after switch condition changes*/}
                 {/* Switch for door size */}
                 <Switch
-                    value={switchValue1}
                     style={{ marginTop: 30 }}
                     // changes state of switch for this switch only
-                    onValueChange={(value) => setSwitchValue1({ value })}
+                    onValueChange={toggleSwitch1}
+                    value={switchValue1}
                 />
                 {/* Extra spaces to prevent words from being too close to the switch */}
                 <Text>                      </Text>
@@ -81,7 +89,7 @@ export default function ReviewPage() {
                 <Switch
                     style={{ marginTop: 30 }}
                     // changes state of switch for this switch only
-                    onValueChange={(value) => setSwitchValue2({ value })}
+                    onValueChange={toggleSwitch2}
                     value={switchValue2} />
                 {/* Extra spaces to prevent words from being too close to the switch */}
                 <Text>                      </Text>
@@ -92,7 +100,7 @@ export default function ReviewPage() {
                 <Switch
                     style={{ marginTop: 30 }}
                     // changes state of switch for this switch only
-                    onValueChange={(value) => setSwitchValue3({ value })}
+                    onValueChange={toggleSwitch3}
                     value={switchValue3} />
                 {/* Extra spaces to prevent words from being too close to the switch */}
                 <Text>                      </Text>
@@ -103,7 +111,7 @@ export default function ReviewPage() {
                 <Switch
                     style={{ marginTop: 30 }}
                     // changes state of switch for this switch only
-                    onValueChange={(value) => setSwitchValue4({ value })}
+                    onValueChange={toggleSwitch4}
                     value={switchValue4} />
                 {/* Extra spaces to prevent words from being too close to the switch */}
                 <Text>                      </Text>
@@ -114,7 +122,7 @@ export default function ReviewPage() {
                 <Switch
                     style={{ marginTop: 30 }}
                     // changes state of switch for this switch only
-                    onValueChange={(value) => setSwitchValue5({ value })}
+                    onValueChange={toggleSwitch5}
                     value={switchValue5} />
                 {/* Extra spaces to prevent words from being too close to the switch */}
                 <Text>                      </Text>
