@@ -8,18 +8,26 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.0.6",
+    "@react-native-community/toolbar-android": "0.1.0-rc.2",
+    "@react-native-firebase/app": "^6.7.1",
     "expo": "~37.0.3",
+    "firebase": "^7.14.2",
+    "native-base": "2.13.8",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
-    "react-native-maps": "^0.27.1",
+    "react-native-atoz-listview": "0.0.7",
+    "react-native-check-box": "^2.1.7",
+    "react-native-dynamic-search-bar": "github:WrathChaos/react-native-dynamic-search-bar",
+    "react-native-dynamic-vector-icons": "github:WrathChaos/react-native-dynamic-vector-icons",
+    "react-native-elements": "^2.0.0",
+    "react-native-paper": "^3.9.0",
+    "react-native-search-box": "0.0.19",
+    "react-native-search-header": "^0.3.5",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "~0.11.7",
-    "expo-permissions": "~8.1.0",
-    "expo-linear-gradient": "~8.1.0"
-  },
-  "devDependencies": {
-    "babel-preset-expo": "~8.1.0",
-    "@babel/core": "^7.8.6"
+    "vscode": "^1.1.36"
   },
   "private": true
 }

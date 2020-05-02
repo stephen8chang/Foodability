@@ -1,148 +1,257 @@
-//This is an example code to understand Switch// 
-import React from 'react';
-//import react in our code. 
-import { Switch, Text, View, StyleSheet, TextInput, ScrollView, Button } from 'react-native';
-//import all the components we are going to use. 
-export default class App extends React.Component {
-  
-  // constructor used for the textbox where users can leave a review
+import React, { Component } from 'react';
+import {
+    Dimensions,
+    AppRegistry,
+    StyleSheet,
+    View,
+    Text,
+    Button,
+    StatusBar
+} from 'react-native';
+import SearchHeader from 'react-native-search-header';
+
+const DEVICE_WIDTH = Dimensions.get(`window`).width;
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: '#f5fcff'
+    },
+    status: {
+        zIndex: 10,
+        elevation: 2,
+        width: DEVICE_WIDTH,
+        height: 21,
+        backgroundColor: '#b19cd9'
+    },
+    header: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: DEVICE_WIDTH,
+        height: 56,
+        marginBottom: 6,
+        backgroundColor: '#b19cd9'
+    },
+    label: {
+        flexGrow: 1,
+        fontSize: 20,
+        fontWeight: `600`,
+        textAlign: `left`,
+        marginVertical: 8,
+        paddingVertical: 3,
+        color: `#f5fcff`,
+        backgroundColor: `transparent`
+    },
+    button: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 130,
+        height: 40,
+        marginTop: 40,
+        borderRadius: 2,
+        backgroundColor: `#ff5722`
+    }
+});
+
+export default class Demo extends Component {
+    constructor (props) {
+        super(props);
+    }
+    render () {
+        return (
+            <View style = { styles.container }>
+                <StatusBar barStyle = 'light-content' />
+                <View style = { styles.status }/>
+                <View style = { styles.header }>
+                    
+                    <Button
+                        title = 'Search'
+                        color = '#f5fcff'
+                        onPress = {() => this.searchHeader.show()}
+                    />
+                </View>
+                <SearchHeader
+                    ref = {(searchHeader) => {
+                        this.searchHeader = searchHeader;
+                    }}
+                    onClear = {() => {
+                        console.log(`Clearing input!`);
+                    }}
+                    onGetAutocompletions = {async (text) => {
+                        if (text) {
+                            const response = await fetch(`http://suggestqueries.google.com/complete/search?client=firefox&q=${text}`, {
+                                method: `get`
+                            });
+                            const data = await response.json();
+                            return data[1];
+                        } else {
+                            return [];
+                        }
+                    }}
+                />
+                
+            </View>
+        );
+    }
+}
+
+
+import { StyleSheet, TouchableOpacity, View, Alert } from 'react-native'
+import { Container, Content, Text, Card, CardItem, Item, Body, Right, Button, Input, Form, Textarea, Left } from 'native-base'
+
+
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      review: ''
+      name: null,
+      review: null,
+      rating: null,
+      isSubmited: false,
     };
   }
-
-  //For generating alert on button click
-  onPressLearnMore(){
-    alert('You have successfully submitted a review! We appreciate your support for the Foodability community!');
-  }
-
-  //Initial state false for all five switches. You can change it to true just to see.
-  state = {
-    switchValue1:false,
-    switchValue2:false,
-    switchValue3:false,
-    switchValue4:false,
-    switchValue5:false
+  postContact = (name, review, rating, nameClear, reviewClear, ratingClear) => {
+    if (this.state.review != null) {
+      fetch('https://fir-bc547.firebaseio.com/reviews.json', {
+        method: 'POST',
+        headers: {
+          Accept: 'reviews/json',
+          'Content-Type': 'reviews/json',
+        },
+        body: JSON.stringify({
+          "name": name,
+          "review": review,
+          "rating": rating,
+        }),
+      })
+        .then((response) => response.json())
+        .then((responseData) => {
+          if (responseData.name != null) {
+            this.refs[nameClear].setNativeProps({ text: '' });
+            this.refs[reviewClear].setNativeProps({ text: '' });
+            this.refs[ratingClear].setNativeProps({ text: '' });
+            this.setState({
+              name: null,
+              review: null,
+              rating: null,
+              isSubmited: true,
+            })
+          }
+          else {
+            Alert.alert(
+              'Oops !',
+              'Something went wrong', [
+              { text: 'OK', onPress: () => console.log('Unsuccessful'), style: 'cancel' },],
+              { cancelable: false })
+          }
+        })
+        .done();
+    }
+    else {
+      Alert.alert(
+        'Oops !',
+        'Fill out all required text input', [
+        { text: 'OK', onPress: () => console.log('Insufficient Data'), style: 'cancel' },],
+        { cancelable: false })
+    }
   };
-  toggleSwitch = (value) => {
-      //onValueChange of the switch this function will be called
-      this.setState({switchValue: value})
-      //state changes according to switch
-      //which will result in re-render the text
-  
-   }
+  _togglePostCard() {
+    this.setState({
+      isSubmited: false
+    })
+  }
   render() {
     return (
-      <ScrollView>
-        <View style={styles.container}>
-            <Text>                         </Text>
-            <Text>                         </Text>
-            <Text>                         </Text>
-            <Text>                         </Text>
-            {/* // title of restaurant */}
-            <Text style = {styles.Title}> Chipotle's Wheelchair Accomodations</Text>
-            <Text>                         </Text>
-            <Text>                         </Text>
-            <Text>                         </Text>
+      <Container>
+        <Content>
+          {this.state.isSubmited ? (
+            <View style={styles.successMessage}>
+              <Text>Thanks!</Text>
 
-            {/* // TextInput used for when customers want to leave a personalized review */}
-            <TextInput
-              value={this.state.review}
-              onChangeText={(review) => this.setState({ review })}
-              placeholder={'Leave a Review Here!'}
-              style={styles.input}
-            />
-
-            {/*Switch with value set in constructor*/}
-            {/*onValueChange will be triggered after switch condition changes*/}
-            {/* Switch for door size */}
-            <Switch
-              style={{marginTop:30}}
-              // changes state of switch for this switch only
-              onValueChange = {(value) => this.setState({switchValue1: value})}
-              value = {this.state.switchValue1}/>
-            {/* Extra spaces to prevent words from being too close to the switch */}
-            <Text>                      </Text>
-            {/*Text to show the text according to switch condition*/}
-            <Text>{this.state.switchValue1?'Door Is Sufficient':'Door Too Narrow'}</Text>
-
-            {/* Switch for proper table height */}
-            <Switch
-              style={{marginTop:30}}
-              // changes state of switch for this switch only
-              onValueChange = {(value) => this.setState({switchValue2: value})}
-              value = {this.state.switchValue2}/>
-            {/* Extra spaces to prevent words from being too close to the switch */}
-            <Text>                      </Text>
-            {/*Text to show the text according to switch condition*/}
-            <Text>{this.state.switchValue2?'Proper Table Height':'Poor Table Height'}</Text>
-
-            {/* Switch for accessible restrooms */}
-            <Switch
-              style={{marginTop:30}}
-              // changes state of switch for this switch only
-              onValueChange = {(value) => this.setState({switchValue3: value})}
-              value = {this.state.switchValue3}/>
-            {/* Extra spaces to prevent words from being too close to the switch */}
-            <Text>                      </Text>
-            {/*Text to show the text according to switch condition*/}
-            <Text>{this.state.switchValue3?'Accessible Restroom':'Unaccessible Restroom'}</Text>
-
-            {/* Switch for automatic doors */}
-            <Switch
-              style={{marginTop:30}}
-              // changes state of switch for this switch only
-              onValueChange = {(value) => this.setState({switchValue4: value})}
-              value = {this.state.switchValue4}/>
-            {/* Extra spaces to prevent words from being too close to the switch */}
-            <Text>                      </Text>
-            {/*Text to show the text according to switch condition*/}
-            <Text>{this.state.switchValue4?'Automatic Doors':'Manual Doors'}</Text>
-            
-            {/* Switch for wheelchair ramp */}
-            <Switch
-              style={{marginTop:30}}
-              // changes state of switch for this switch only
-              onValueChange = {(value) => this.setState({switchValue5: value})}
-              value = {this.state.switchValue5}/>
-            {/* Extra spaces to prevent words from being too close to the switch */}
-            <Text>                      </Text>
-            {/*Text to show the text according to switch condition*/}
-            <Text>{this.state.switchValue5?'Wheelchair Ramp':'No Wheelchair Ramp'}</Text>
-
-            <Text>                         </Text>
-            <Text>                         </Text>
-            <Text>                          </Text>
-            {/* // button used to "submit" review */}
-            <Button
-            onPress={this.onPressLearnMore}
-            title="Submit Review"
-            color="#841584"
-            />
-        </View>
-      </ScrollView>
-    );  
-  } 
+              <Body>
+                <TouchableOpacity
+                  success
+                  onPress={() => this._togglePostCard()}
+                ></TouchableOpacity>
+              </Body>
+              <Right></Right>
+            </View>
+          ) : (
+            <View>
+              <CardItem>
+                <Item>
+                  <Input
+                    placeholder="Restaurant Name"
+                    onChangeText={(name) => this.setState({ name })}
+                    numberOfLines={5}
+                    ref={"nameClear"}
+                  />
+                </Item>
+              </CardItem>
+              <CardItem>
+                <Item>
+                  <Input
+                    style={styles.reviewBox}
+                    value={this.props.value}
+                    placeholder="Enter your review"
+                    onChangeText={(review) => this.setState({ review })}
+                    editable={!this.props.confirm}
+                    multiline={true}
+                    ref={"reviewClear"}
+                  />
+                </Item>
+              </CardItem>
+              <CardItem>
+                <Item>
+                  <Input
+                    placeholder="Restaurant rating"
+                    onChangeText={(rating) => this.setState({ rating })}
+                    ref={"ratingClear"}
+                    keyboardType={"numeric"}
+                    maxLength = {3}
+                  />
+                </Item>
+              </CardItem>
+              <CardItem>
+                <Left></Left>
+                <Body>
+                  <Button
+                    success
+                    onPress={() =>
+                      this.postContact(
+                        this.state.name,
+                        this.state.review,
+                        this.state.rating,
+                        "nameClear",
+                        "reviewClear",
+                        "ratingClear"
+                      )
+                    }
+                  >
+                    <Text>SUBMIT</Text>
+                  </Button>
+                </Body>
+                <Right></Right>
+              </CardItem>
+            </View>
+          )}
+        </Content>
+      </Container>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
-  container: {
+  successMessage: {
     flex: 1,
-    justifyContent: 'center',
+    height: 200,
+    margin: 25,
     alignItems: 'center',
+    justifyContent: "center",
   },
-  // seperate styles option just for the title of the screen
-  Title : {
-    fontSize : 20,
-  },
-  // separate styles option for the review box
-  input: {
-    width: 250,
-    height: 100,
-    padding: 30,
-    marginBottom: 10,
-    backgroundColor: '#ecf0f1'
+  reviewBox: {
+    height: 200,
   },
 });

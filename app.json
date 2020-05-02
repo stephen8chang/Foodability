@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "foodability",
-    "slug": "foodability",
+    "name": "react-firebase",
+    "slug": "react-firebase",
     "platforms": [
       "ios",
       "android",
