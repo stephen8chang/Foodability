@@ -1,165 +1,111 @@
-//This is an example code to understand Switch// 
-import React from 'react';
-//import react in our code. 
-import { Switch, Text, View, StyleSheet, TextInput, ScrollView, Button } from 'react-native';
-import { useState } from "react";
+import React from "react";
+import { StyleSheet, View, Text, Button, Image, FlatList } from "react-native";
+import { Card } from 'react-native-paper'
 
-export default function ReviewPage() {
+export default function ReviewPage({ route, navigation }) {
+    const { data } = route.params;
+    const { uri } = route.params;
+    const { path } = route.params;
+    const { address } = route.params;
+    const { ada } = route.params;
+    const { adaRating } = route.params;
+    const { wheel } = route.params;
+    const { wheelRating } = route.params;
+    const { door } = route.params;
+    const { doorRating } = route.params;
+    const renderList = ((item) => {
+        return (
+            <Card style={styles.mycard} key={item.review}>
+                <View style={styles.cardView}>
+                    <Image
+                        style={{ width: 60, height: 60, borderRadius: 30 }}
+                        source={{ uri: uri }}
 
-    // constructor used for the textbox where users can leave a review
-    /*constructor(props) {
-      super(props);
-      this.state = {
-        review: ''
-      };
-    } */
-
-    //For generating alert on button click
-    const onPressLearnMore = () => {
-        alert('You have successfully submitted a review! We appreciate your support for the Foodability community!');
-    }
-
-    //Initial state false for all five switches. You can change it to true just to see.
-    /* state = {
-      switchValue1:false,
-      switchValue2:false,
-      switchValue3:false,
-      switchValue4:false,
-      switchValue5:false
-    };
-    toggleSwitch = (value) => {
-        //onValueChange of the switch this function will be called
-        this.setState({switchValue: value})
-        //state changes according to switch
-        //which will result in re-render the text
-    
-     } */
-
-
-    const [review, setReview] = useState('');
-    const [switchValue1, setSwitchValue1] = useState(false);
-    const [switchValue2, setSwitchValue2] = useState(false);
-    const [switchValue3, setSwitchValue3] = useState(false);
-    const [switchValue4, setSwitchValue4] = useState(false);
-    const [switchValue5, setSwitchValue5] = useState(false);
-
-    const toggleSwitch1 = () => setSwitchValue1(previousState => !previousState);
-    const toggleSwitch2 = () => setSwitchValue2(previousState => !previousState);
-    const toggleSwitch3 = () => setSwitchValue3(previousState => !previousState);
-    const toggleSwitch4 = () => setSwitchValue4(previousState => !previousState);
-    const toggleSwitch5 = () => setSwitchValue5(previousState => !previousState);
-
+                    />
+                    <View style={{ marginLeft: 10 }}>
+                        <Text style={styles.text}>{item.name}</Text>
+                        <Text style={styles.text}>{item.reviewInfo}</Text>
+                    </View>
+                </View>
+            </Card>
+        )
+    })
 
     return (
-        <ScrollView>
-            <View style={styles.container}>
-                <Text>                         </Text>
-                <Text>                         </Text>
-                <Text>                         </Text>
-                <Text>                         </Text>
-                {/* // title of restaurant */}
-                <Text style={styles.Title}> Chipotle's Wheelchair Accomodations</Text>
-                <Text>                         </Text>
-                <Text>                         </Text>
-                <Text>                         </Text>
-
-                {/* // TextInput used for when customers want to leave a personalized review */}
-                <TextInput
-                    value={review}
-                    onChangeText={(value) => setReview({ value })}
-                    placeholder={'Leave a Review Here!'}
-                    style={styles.input}
+        <View style={{ flex: 1 }}>
+            <Card style={{ margin: 10 }}>
+                <Image
+                    style={{ width: 395, height: 200 }}
+                    source={path}
                 />
-
-                {/*Switch with value set in constructor*/}
-                {/*onValueChange will be triggered after switch condition changes*/}
-                {/* Switch for door size */}
-                <Switch
-                    style={{ marginTop: 30 }}
-                    // changes state of switch for this switch only
-                    onValueChange={toggleSwitch1}
-                    value={switchValue1}
-                />
-                {/* Extra spaces to prevent words from being too close to the switch */}
-                <Text>                      </Text>
-                {/*Text to show the text according to switch condition*/}
-                <Text>{switchValue1 ? 'Door Is Sufficient' : 'Door Too Narrow'}</Text>
-
-                {/* Switch for proper table height */}
-                <Switch
-                    style={{ marginTop: 30 }}
-                    // changes state of switch for this switch only
-                    onValueChange={toggleSwitch2}
-                    value={switchValue2} />
-                {/* Extra spaces to prevent words from being too close to the switch */}
-                <Text>                      </Text>
-                {/*Text to show the text according to switch condition*/}
-                <Text>{switchValue2 ? 'Proper Table Height' : 'Poor Table Height'}</Text>
-
-                {/* Switch for accessible restrooms */}
-                <Switch
-                    style={{ marginTop: 30 }}
-                    // changes state of switch for this switch only
-                    onValueChange={toggleSwitch3}
-                    value={switchValue3} />
-                {/* Extra spaces to prevent words from being too close to the switch */}
-                <Text>                      </Text>
-                {/*Text to show the text according to switch condition*/}
-                <Text>{switchValue3 ? 'Accessible Restroom' : 'Unaccessible Restroom'}</Text>
-
-                {/* Switch for automatic doors */}
-                <Switch
-                    style={{ marginTop: 30 }}
-                    // changes state of switch for this switch only
-                    onValueChange={toggleSwitch4}
-                    value={switchValue4} />
-                {/* Extra spaces to prevent words from being too close to the switch */}
-                <Text>                      </Text>
-                {/*Text to show the text according to switch condition*/}
-                <Text>{switchValue4 ? 'Automatic Doors' : 'Manual Doors'}</Text>
-
-                {/* Switch for wheelchair ramp */}
-                <Switch
-                    style={{ marginTop: 30 }}
-                    // changes state of switch for this switch only
-                    onValueChange={toggleSwitch5}
-                    value={switchValue5} />
-                {/* Extra spaces to prevent words from being too close to the switch */}
-                <Text>                      </Text>
-                {/*Text to show the text according to switch condition*/}
-                <Text>{switchValue5 ? 'Wheelchair Ramp' : 'No Wheelchair Ramp'}</Text>
-
-                <Text>                         </Text>
-                <Text>                         </Text>
-                <Text>                          </Text>
-                {/* // button used to "submit" review */}
-                <Button
-                    onPress={onPressLearnMore}
-                    title="Submit Review"
-                    color="#841584"
-                />
-            </View>
-        </ScrollView>
+            </Card>
+            <Card style={{ margin: 10 }}>
+                <Text>{address}</Text>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.redSquare} />
+                    <Text>  ADA Compliant Restrooms                                  </Text>
+                    <View style={styles.container}>
+                        <Image source={require('../star.png')} style={{ width: 25, height: 25 }} tintColor='red'>
+                        </Image>
+                        <View style={styles.overlay} />
+                    </View>
+                    <Text>{adaRating}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.greenSquare} />
+                    <Text>  Wheelchair Accessibility                                      </Text>
+                    <View style={styles.container}>
+                        <Image source={require('../star.png')} style={{ width: 25, height: 25 }} tintColor='red'>
+                        </Image>
+                        <View style={styles.overlay} />
+                    </View>
+                    <Text>{wheelRating}</Text>
+                </View>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.greenSquare} />
+                    <Text>  Automatic Doors                                                   </Text>
+                    <View style={styles.container}>
+                        <Image source={require('../star.png')} style={{ width: 25, height: 25 }} tintColor='red'>
+                        </Image>
+                        <View style={styles.overlay} />
+                    </View>
+                    <Text>{doorRating}</Text>
+                </View>
+            </Card>
+            <FlatList
+                data={data}
+                renderItem={({ item }) => {
+                    return renderList(item)
+                }}
+                keyExtractor={item => `${item.review}`}
+            />
+        </View>
     );
-
 }
 
+
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+    mycard: {
+        margin: 5,
     },
-    // seperate styles option just for the title of the screen
-    Title: {
-        fontSize: 20,
+    cardView: {
+        flexDirection: "row",
+        padding: 6
     },
-    // separate styles option for the review box
-    input: {
-        width: 250,
-        height: 100,
-        padding: 30,
-        marginBottom: 10,
-        backgroundColor: '#ecf0f1'
+    text: {
+        fontSize: 18
     },
-});
+    redSquare: {
+        width: 10,
+        height: 10,
+        backgroundColor: 'red'
+    },
+    greenSquare: {
+        width: 10,
+        height: 10,
+        backgroundColor: 'green'
+    }
+})
+
+
+//<Button title="back to home screen" onPress={navigation.goBack()} />

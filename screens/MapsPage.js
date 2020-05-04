@@ -57,7 +57,7 @@ export default function MapsPage({ navigation }) {
     const [coords, setCoords] = useState([]);
 
     /*useEffect(() => {
-      getDirections("30.286488,-97.736568", "30.286176 ,-97.742169")
+    getDirections("30.286488,-97.736568", "30.286176 ,-97.742169")
         .then(coords => setCoords(coords))
         .catch(err => console.log("Something went wrong"));
     }, []); */
@@ -65,6 +65,14 @@ export default function MapsPage({ navigation }) {
     const [search, setSearch] = useState("");
     return (
         <>
+            {/* <SearchBar
+        placeholder="Type Here..."
+        onChangeText={(text) => setSearch(text)}
+        value={search}
+        <Navigator />
+      /> */}
+
+
             <MapView
                 style={styles.map}
                 initialRegion={{
@@ -80,16 +88,16 @@ export default function MapsPage({ navigation }) {
                     title={"GDC"}
                     description={"Convergent team meeting place!"}
                 >
-                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                    <MapView.Callout>
                         <View>
-                            <Text style={styles.header} >
+                            <Text style={styles.header}>
                                 Gates Dell Complex
                             </Text>
                             <Text style={styles.body}>
                                 Meeting place for Convergent meetings.
                             </Text>
                             <Button
-                                title={"Learn More"}
+                                title="Learn More"
                             />
                         </View>
                     </MapView.Callout>
@@ -101,9 +109,26 @@ export default function MapsPage({ navigation }) {
                     title={"Chipotle"}
                     description={"Cool place to eat Tex Mex food!"}
                     pinColor={"blue"}
-                    onPress={() => { getDirections("30.286488,-97.736568", "30.286176 ,-97.742169").then((coords) => setCoords(coords)) }}
-                >
-                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                    onPress={() => {
+                        getDirections("30.286488,-97.736568", "30.286176 ,-97.742169").then((coords) => setCoords(coords)); navigation.navigate('Review Page',
+                            {
+                                data: [
+                                    { review: 1, name: "Gautham", reviewInfo: "Chicken is cold man" },
+                                    { review: 2, name: "Stephanie", reviewInfo: "I can cook better tbh" },
+                                    { review: 3, name: "Bob", reviewInfo: "Loved it!" },
+                                    { review: 4, name: "Jill", reviewInfo: "No wheelchair access! smh" },
+                                    { review: 5, name: "Rainer", reviewInfo: "cancelled " },
+                                    { review: 6, name: "Martin", reviewInfo: "where's the ada compliance??" },
+                                    { review: 7, name: "Jim", reviewInfo: "good" },
+                                    { review: 8, name: "Kevin", reviewInfo: "great" },
+                                    { review: 9, name: "Betty", reviewInfo: "awesome" },
+                                    { review: 10, name: "Ryan", reviewInfo: "perfect" },
+                                ], uri: 'https://images.unsplash.com/photo-1485550409059-9afb054cada4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=carson-arias-7Z03R1wOdmI-unsplash.jpg',
+                                path: require('../chipotle.jpg'), address: "Address: 2230 Guadalupe St # 32, Austin, TX 78705", ada: false, adaRating: 0.0,
+                                wheel: true, wheelRating: 3, door: true, doorRating: 3
+                            })
+                    }}>
+                    <MapView.Callout>
                         <View>
                             <Text style={styles.header}>
                                 Chipotle
@@ -117,15 +142,31 @@ export default function MapsPage({ navigation }) {
                         </View>
                     </MapView.Callout>
                 </MapView.Marker>
-
                 <MapView.Marker
                     coordinate={{ latitude: 30.281785, longitude: -97.743173 }}
                     title={"Chick-fil-A"}
                     description={"Best fast food place ever!"}
                     pinColor={"blue"}
-                    onPress={() => getDirections("30.286488,-97.736568", "30.281785 ,-97.743173").then((coords) => setCoords(coords))}
-                >
-                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                    onPress={() => {
+                        getDirections("30.286488,-97.736568", "30.286176 ,-97.742169").then((coords) => setCoords(coords)); navigation.navigate('Review Page',
+                            {
+                                data: [
+                                    { review: 1, name: "James", reviewInfo: "my child needs ada compliant accomodations!" },
+                                    { review: 2, name: "Franklyn", reviewInfo: "Used to love their chicken :(" },
+                                    { review: 3, name: "Tamiko", reviewInfo: "They don't clean the bathrooms. ugh" },
+                                    { review: 4, name: "Jeana", reviewInfo: "Love their wheelchair accessibility!" },
+                                    { review: 5, name: "Martha", reviewInfo: "Automatic door ftwwwwww" },
+                                    { review: 6, name: "Luvenia", reviewInfo: "alright" },
+                                    { review: 7, name: "Stefano", reviewInfo: "good" },
+                                    { review: 8, name: "Lynne", reviewInfo: "Awesome accomodating!!!!" },
+                                    { review: 9, name: "Tami", reviewInfo: "awesome" },
+                                    { review: 10, name: "Yash", reviewInfo: "perfect" },
+                                ], uri: 'https://images.unsplash.com/photo-1494253109108-2e30c049369b?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&dl=davisco-5E5N49RWtbA-unsplash.jpg',
+                                path: require('../cfa.jpg'), address: "503 W Martin Luther King Jr Blvd, Austin, TX 78701", ada: false, adaRating: 0.0,
+                                wheel: true, wheelRating: 4.0, door: true, doorRating: 4.0
+                            })
+                    }}>
+                    <MapView.Callout>
                         <View>
                             <Text style={styles.header}>
                                 Chick-fil-A
@@ -147,7 +188,7 @@ export default function MapsPage({ navigation }) {
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.293756 ,-97.741728").then((coords) => setCoords(coords))}
                 >
-                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                    <MapView.Callout>
                         <View>
                             <Text style={styles.header}>
                                 Torchy's Tacos
@@ -169,7 +210,7 @@ export default function MapsPage({ navigation }) {
                     pinColor={"blue"}
                     onPress={() => getDirections("30.286488,-97.736568", "30.286289 ,-97.744987").then((coords) => setCoords(coords))}
                 >
-                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                    <MapView.Callout>
                         <View>
                             <Text style={styles.header}>
                                 Plucker's
@@ -185,13 +226,13 @@ export default function MapsPage({ navigation }) {
                 </MapView.Marker>
 
                 <MapView.Marker
-                    coordinate={{ latitude: 30.278990, longitude: -97.742402 }}
+                    coordinate={{ latitude: 30.279067, longitude: -97.742423 }}
                     title={"Clay Pit"}
-                    description={"Awesome indian food!"}
+                    description={"Great Indian food!"}
                     pinColor={"blue"}
-                    onPress={() => getDirections("30.286488,-97.736568", "30.278990 ,-97.742402").then((coords) => setCoords(coords))}
+                    onPress={() => getDirections("30.286488,-97.736568", "30.279067 ,-97.742423").then((coords) => setCoords(coords))}
                 >
-                    <MapView.Callout onPress={() => { navigation.navigate('ReviewPage') }}>
+                    <MapView.Callout>
                         <View>
                             <Text style={styles.header}>
                                 Clay Pit
@@ -207,6 +248,11 @@ export default function MapsPage({ navigation }) {
                 </MapView.Marker>
 
             </MapView>
+
+
+            {/* <View style={{ alignSelf: 'center', fontSize: 10, justifyContent: 'center', alignItems: 'center' }}>
+                <Text> Foodability Maps View </Text>
+            </View> */}
 
         </>
     );
